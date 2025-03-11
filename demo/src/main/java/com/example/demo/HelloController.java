@@ -141,6 +141,20 @@ public class HelloController {
             universitiesByCountry.put("Τουρκία", DSG.TURKEY);
             universitiesByCountry.put("Ρουμανία", DSG.ROMANIA);            
         }
+        if ("Πληροφορικής".equalsIgnoreCase(department)) {
+            universitiesByCountry.put("Αυστρία", CSG.AUSTRIA);
+            universitiesByCountry.put("Κύπρος", CSG.CYPRUS);
+            universitiesByCountry.put("Γαλλία", CSG.FRANCE); 
+            universitiesByCountry.put("Γερμανία", CSG.GERMANY);
+            universitiesByCountry.put("Δανία", CSG.DENMARK);
+            universitiesByCountry.put("Ιταλία", CSG.ITALY);
+            universitiesByCountry.put("Λιθουανία", CSG.LITHUANIA);
+            universitiesByCountry.put("Ολλανδία", CSG.NETHERLANDS);
+            universitiesByCountry.put("Νορβηγία", CSG.NORWAY);
+            universitiesByCountry.put("Πορτογαλία", CSG.PORTUGAL);
+            universitiesByCountry.put("Ισπανία", CSG.SPAIN);
+            universitiesByCountry.put("Σουηδία", CSG.SWEDEN);
+        }
         return universitiesByCountry;
     }
 }

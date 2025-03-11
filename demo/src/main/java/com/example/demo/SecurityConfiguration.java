@@ -29,12 +29,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> {
+                // Απενεργοποίηση CSRF σε περιβάλλον ανάπτυξης (dev)
                 if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
                     csrf.disable();
                 }
             })
             .authorizeHttpRequests(auth -> auth
-                // Επιτρέπει την πρόσβαση στα public endpoints, στατικά αρχεία και στα API
+                // Επιτρέπει πρόσβαση στα public endpoints, στα στατικά αρχεία και στα API
                 .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/api/**").permitAll()
                 .anyRequest().authenticated()
             )

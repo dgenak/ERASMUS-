@@ -11,13 +11,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Αριθμός Μητρώου (χρησιμοποιείται για login)
-    @Column(unique = true, nullable = false)
+    // Αριθμός Μητρώου (αποθηκεύεται για άλλους σκοπούς)
+    @Column(nullable = false)
     private String registrationNumber;
 
-    // Εμφανιζόμενο όνομα μέσα στην εφαρμογή
+    // Όνομα Χρήστη που χρησιμοποιείται για login και εμφάνιση (πρέπει να είναι μοναδικό)
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)

@@ -13,11 +13,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
     
     @Override
-    public UserDetails loadUserByUsername(String registrationNumber) throws UsernameNotFoundException {
-         // Βρίσκουμε τον χρήστη βάσει του registrationNumber
-         User user = userRepository.findByRegistrationNumber(registrationNumber);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+         User user = userRepository.findByUsername(username);
          if (user == null) {
-             throw new UsernameNotFoundException("User not found: " + registrationNumber);
+             throw new UsernameNotFoundException("User not found: " + username);
          }
          return new MyUserDetails(user);
     }

@@ -11,10 +11,11 @@
   <title>ΟΠΑ - ERASMUS</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap" rel="stylesheet">
-  <!-- Εξωτερικό αρχείο CSS -->
+  <!-- Εξωτερικό αρχείο CSS (styles.css πρέπει να βρίσκεται στο src/main/resources/static/css) -->
   <link rel="stylesheet" th:href="@{/css/styles.css}">
+
   <style>
-    /* Γενικό Styling */
+    /* ========== Βασικό Styling ========== */
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -37,15 +38,8 @@
       letter-spacing: 1px;
       position: relative;
     }
-    /* Logo στο πάνω αριστερό μέρος */
-    .logo {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 80px; /* Προσαρμόστε το μέγεθος όπως επιθυμείτε */
-      height: auto;
-    }
-    /* Σύνδεση / Εγγραφή (όταν δεν είναι αυθεντικοποιημένος ο χρήστης) */
+    /* ΑΦΑΙΡΕΘΗΚΕ ΟΛΟΚΛΗΡΟ ΤΟ div.logo ΜΕ ΤΟ SVG */
+
     .auth-links {
       position: absolute;
       top: 10px;
@@ -57,14 +51,13 @@
       text-decoration: none;
       margin-right: 10px;
     }
-    /* Εμφάνιση του ονόματος χρήστη όταν είναι αυθεντικοποιημένος */
+    /* Εμφάνιση του username πάνω αριστερά */
     .profile-info {
       position: absolute;
-      top: 10px;
-      right: 15px;
+      top: 25px;
+      left: 25px;
       font-size: 16px;
     }
-    /* Χρησιμοποιούμε το principal.displayName για να εμφανίσουμε το όνομα */
     .profile-info a {
       color: #fff;
       text-decoration: none;
@@ -162,7 +155,6 @@
     textarea:focus {
       border-color: #00509e;
     }
-    /* Βασικό στυλ για κουμπιά */
     button {
       padding: 12px 24px;
       font-size: 16px;
@@ -178,7 +170,6 @@
       background-color: #0073e6;
       transform: scale(1.02);
     }
-    /* Στυλ για το κουμπί "Μοιράσου την εμπειρία σου" */
     .custom-button {
       display: inline-block;
       background: linear-gradient(135deg, #d2d2d3, #f5f3f348);
@@ -190,13 +181,14 @@
       font-size: 30px;
       cursor: pointer;
       text-decoration: none;
-      text-align: center;
+      text-align: left; /* Προσθέτουμε αυτή τη γραμμή για στοίχιση προς τα αριστερά */
       max-width: 250px;
       margin-top: 20px;
       transition: box-shadow 0.2s ease, transform 0.2s ease;
       white-space: normal;
       word-wrap: break-word;
     }
+
     .custom-button:hover {
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       transform: translateY(-2px);
@@ -219,6 +211,32 @@
       background-color: #00509e;
       color: #fff;
     }
+    /* Styling για το πινακάκι με σχόλια */
+    .comment-table {
+        width: 100%;
+        border-collapse: separate; /* Αλλαγή από collapse σε separate */
+        border-spacing: 0;         /* Αφαίρεση του spacing */
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+        border-radius: 15px;         /* Στρογγυλεμένες γωνίες */
+        overflow: hidden;           /* Εξασφάλιση εφαρμογής border-radius */
+    }
+
+    .comment-table th {
+        background-color: #00509e;
+        color: #fff;
+        padding: 14px;
+        text-align: left;
+        font-size: 18px;
+    }
+
+    .comment-table td {
+        border: 1px solid #ddd;
+        padding: 14px;
+        font-size: 16px;
+    }
+
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -265,6 +283,80 @@
       max-width: 600px;
       display: none;
     }
+    /* Στυλ για το Sidebar (δεξιά) */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background-color: #f9f9f9;
+      box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 999;
+    }
+    .sidebar.open {
+      width: 320px;
+    }
+    .closebtn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 36px;
+      text-decoration: none;
+      color: #333;
+      cursor: pointer;
+    }
+    .openbtn {
+      position: fixed;
+      top: 355px;
+      right: 25px;
+      background: linear-gradient(135deg, #003366, #00509e);
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 25px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      z-index: 800;
+    }
+
+    .openbtn:hover {
+      background-color: #0073e6;
+    }
+    /* Στυλ για το Ημερολόγιο */
+    .calendar-container {
+      text-align: center;
+      padding: 20px;
+    }
+    .calendar-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #003366;
+    }
+    table.calendar {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 250px;
+    }
+    table.calendar th {
+      background-color: #0073e6;
+      color: #fff;
+      padding: 5px;
+      text-align: center;
+    }
+    table.calendar td {
+      border: 1px solid #ddd;
+      text-align: center;
+      padding: 8px;
+      cursor: pointer;
+    }
+    table.calendar td:hover {
+      background-color: #f0f0f0;
+    }
     footer {
       text-align: center;
       padding: 20px 0;
@@ -274,6 +366,147 @@
       font-size: 16px;
     }
   </style>
+</head>
+<body onload="showHome()">
+  <header>
+    <!-- Αν δεν είναι συνδεδεμένος ο χρήστης -->
+    <div class="auth-links" sec:authorize="!isAuthenticated()">
+      <a th:href="@{/login}">Log In</a>
+      <a th:href="@{/register}">Sign In</a>
+    </div>
+
+    <!-- Εάν είναι συνδεδεμένος ο χρήστης, εμφανίζεται το εμφανιζόμενο όνομα (πάνω αριστερά πλέον) -->
+    <div class="profile-info" sec:authorize="isAuthenticated()">
+      <a th:href="@{/profile}" style="color: #fff; text-decoration: none;">
+        <span sec:authentication="principal.displayName">Χρήστης</span>
+      </a>
+    </div>
+
+    <h1>Οικονομικό Πανεπιστήμιο Αθηνών</h1>
+    <p>Συνεργαζόμενα Πανεπιστήμια & Μαθήματα</p>
+
+    <!-- Κουμπί sidebar (fixed, ίδιο background με header) -->
+    <button class="openbtn" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <nav>
+    <a href="#" class="nav-item" onclick="showHome()">ΑΡΧΙΚΗ</a>
+    <div class="dropdown">
+      <a href="#" class="nav-item">ΤΜΗΜΑΤΑ</a>
+      <div class="dropdown-content">
+        <a href="#" onclick="showDepartment('Οικονομικής Επιστήμης')">Οικονομικής Επιστήμης</a>
+        <a href="#" onclick="showDepartment('Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών')">Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών</a>
+        <a href="#" onclick="showDepartment('Διοικητικής Επιστήμης και Τεχνολογίας')">Διοικητικής Επιστήμης και Τεχνολογίας</a>
+        <a href="#" onclick="showDepartment('Οργάνωσης και Διοίκησης Επιχειρήσεων')">Οργάνωσης και Διοίκησης Επιχειρήσεων</a>
+        <a href="#" onclick="showDepartment('Μάρκετινγκ και Επικοινωνίας')">Μάρκετινγκ και Επικοινωνίας</a>
+        <a href="#" onclick="showDepartment('Στατιστικής')">Στατιστικής</a>
+        <a href="#" onclick="showDepartment('Πληροφορικής')">Πληροφορικής</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Κεντρικό container για δυναμικό περιεχόμενο -->
+  <div class="container" id="content"></div>
+
+  <!-- Forum Modal Overlay -->
+  <div id="forumModalOverlay" onclick="closeForumModal()"></div>
+  <!-- Forum Modal -->
+  <div id="forumModal">
+    <h2>Μοιράσου την εμπειρία σου</h2>
+    <form id="forumForm">
+      <label for="forumDepartment">Τμήμα:</label>
+      <select id="forumDepartment" onchange="fetchForumUniversities(this.value)">
+        <option value="">-- Επιλέξτε Τμήμα --</option>
+        <option value="Οικονομικής Επιστήμης">Οικονομικής Επιστήμης</option>
+        <option value="Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών">Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών</option>
+        <option value="Διοικητικής Επιστήμης και Τεχνολογίας">Διοικητικής Επιστήμης και Τεχνολογίας</option>
+        <option value="Οργάνωσης και Διοίκησης Επιχειρήσεων">Οργάνωσης και Διοίκησης Επιχειρήσεων</option>
+        <option value="Μάρκετινγκ και Επικοινωνίας">Μάρκετινγκ και Επικοινωνίας</option>
+        <option value="Στατιστικής">Στατιστικής</option>
+        <option value="Πληροφορικής">Στατιστικής</option>
+      </select>
+      <br><br>
+      <label for="forumCountry">Χώρα:</label>
+      <select id="forumCountry" onchange="populateForumUniversities(this.value)">
+        <option value="">-- Επιλέξτε Χώρα --</option>
+      </select>
+      <br><br>
+      <label for="forumUniversity">Συνεργαζόμενο Πανεπιστήμιο:</label>
+      <select id="forumUniversity">
+        <option value="">-- Επιλέξτε Πανεπιστήμιο --</option>
+      </select>
+      <br><br>
+      <label for="forumExperience">Εμπειρία:</label>
+      <textarea id="forumExperience" rows="5" placeholder="Γράψτε λίγα λόγια για την εμπειρία σας..."></textarea>
+      <br><br>
+      <button type="button" onclick="submitForumPost()">Υποβολή</button>
+      <button type="button" onclick="closeForumModal()">Κλείσιμο</button>
+    </form>
+  </div>
+
+  <!-- Info Modal Overlay -->
+  <div id="infoModalOverlay" onclick="closeUniversityInfoModal()"></div>
+  <!-- Info Modal (για πληροφορίες πανεπιστημίου) -->
+  <div id="infoModal">
+    <h2 id="infoTitle"></h2>
+    <p id="infoCity"></p>
+    <p id="infoDescription"></p>
+    <div id="infoComments"></div>
+    <br>
+    <button onclick="showCommentsInInfoModal()">Δείτε Σχόλια</button>
+    <button onclick="openCoursesPage()">Δες τα μαθήματα</button>
+    <button onclick="closeUniversityInfoModal()">Κλείσιμο</button>
+  </div>
+
+  <!-- Sidebar (δεξιά) με το ημερολόγιο -->
+  <div id="mySidebar" class="sidebar">
+    <span class="closebtn" onclick="toggleSidebar()">&times;</span>
+    <div class="calendar-container">
+      <div class="calendar-title">March 2025</div>
+      <table class="calendar">
+        <thead>
+          <tr>
+            <th>M</th>
+            <th>T</th>
+            <th>W</th>
+            <th>T</th>
+            <th>F</th>
+            <th>S</th>
+            <th>S</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+          </tr>
+          <tr>
+            <td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td>
+          </tr>
+          <tr>
+            <td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td>
+          </tr>
+          <tr>
+            <td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td>
+          </tr>
+          <tr>
+            <td>29</td><td>30</td><td>31</td><td></td><td></td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- ΝΕΕΣ Επιλογές στο Sidebar -->
+    <div class="sidebar-buttons" style="padding: 20px; text-align: center;">
+      <button onclick="redirectToProfile()" style="display: block; margin: 10px auto; width: 90%;">Το προφίλ σου</button>
+      <button onclick="redirectToDeclarations()" style="display: block; margin: 10px auto; width: 90%;">Οι δηλώσεις σου</button>
+      <button onclick="redirectToSettings()" style="display: block; margin: 10px auto; width: 90%;">Ρυθμίσεις</button>
+      <button onclick="signOut()" style="display: block; margin: 10px auto; width: 90%;">Sign out</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Οικονομικό Πανεπιστήμιο Αθηνών</p>
+  </footer>
+
   <script>
     // Ανάκτηση των τιμών CSRF από τα meta tags
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
@@ -340,8 +573,8 @@
     }
 
     function showHome() {
-      document.getElementById("content").innerHTML = `
-        <hr>
+      document.getElementById("content").innerHTML = 
+        `<hr>
         <h2>Πρόγραμμα Erasmus+</h2>
         <p>
           Αναζητάς μια εμπειρία που θα μεταμορφώσει τη ζωή σου; Το πρόγραμμα Erasmus σου προσφέρει την ευκαιρία 
@@ -349,23 +582,19 @@
           και να γνωρίσεις νέους ανθρώπους από κάθε γωνιά του κόσμου. Εδώ θα ανακαλύψεις διαφορετικούς πολιτισμούς, 
           θα δημιουργήσεις αξέχαστες φιλίες και θα εμπλουτίσεις το βιογραφικό σου με μοναδικές εμπειρίες. 
           Κάθε στιγμή θα είναι γεμάτη μάθηση και προσωπική εξέλιξη. Μην αφήνεις αυτήν την ευκαιρία να περάσει 
-          ανεκμετάλλευτη – κάνε το πρώτο βήμα προς ένα λαμπρό μέλλον και ζήσε την αξέχαστη εμπειρία του Erasmus!
+          αναξιοποίητη – κάνε το πρώτο βήμα προς ένα λαμπρό μέλλον και ζήσε την αξέχαστη εμπειρία του Erasmus!
         </p>
         <br><br>
         <button class="custom-button" onclick="openForumModal()">Μοιράσου την εμπειρία σου!!</button>
         <h2>Ακόμα σκεφτεσαι να πας ERASMUS;;</h2>
-        <p>Δες τις εμπειρίες άλλων</p>
-        <div id="studentComments">
-          <p>Σχόλιο φοιτητή 1: Η εμπειρία μου ήταν αξέχαστη!</p>
-          <p>Σχόλιο φοιτητή 2: Το πρόγραμμα με άλλαξε τη ζωή!</p>
-        </div>
-      `;
+        <div id="studentComments"></div>`;
+      loadHomeComments();
     }
 
     async function showDepartment(name) {
       currentDepartment = name;
-      document.getElementById("content").innerHTML = `
-        <h2>${name}</h2>
+      document.getElementById("content").innerHTML = 
+        `<h2>${name}</h2>
         <p>Επιλέξτε χώρα για να δείτε τα συνεργαζόμενα πανεπιστήμια.</p>
         <div class="select-container">
           <select id="countrySelect" onchange="showUniversitiesByCountry()">
@@ -380,8 +609,7 @@
             </tr>
           </table>
         </div>
-        <div id="forumCommentsContainer"></div>
-      `;
+        <div id="forumCommentsContainer"></div>`;
       await fetchUniversities(name);
     }
 
@@ -444,10 +672,9 @@
         } else {
           posts.forEach(post => {
             const postDiv = document.createElement("div");
-            postDiv.innerHTML = `
-              <strong>${post.username}</strong> - ${new Date(post.timestamp).toLocaleString()}<br>
-              ${post.experience}<hr>
-            `;
+            postDiv.innerHTML = 
+              `<strong>${post.username}</strong> - ${new Date(post.timestamp).toLocaleString()}<br>
+              ${post.experience}<hr>`;
             commentsDiv.appendChild(postDiv);
           });
         }
@@ -473,6 +700,8 @@
         if (response.ok) {
           alert('Η εμπειρία σας καταχωρήθηκε επιτυχώς.');
           closeForumModal();
+          // Ενημέρωση πίνακα σχολίων στην αρχική σελίδα
+          loadHomeComments();
         } else {
           alert('Παρουσιάστηκε σφάλμα κατά την καταχώρηση.');
         }
@@ -482,6 +711,7 @@
       }
     }
 
+
     function openForumModal() {
       document.getElementById("forumModal").style.display = "block";
       document.getElementById("forumModalOverlay").style.display = "block";
@@ -490,109 +720,62 @@
       document.getElementById("forumModal").style.display = "none";
       document.getElementById("forumModalOverlay").style.display = "none";
     }
-  </script>
-</head>
-<body onload="showHome()">
-  <header>
-    <!-- Logo στο πάνω αριστερό μέρος -->
-    <div class="logo">
-      <!-- Μικρό SVG λογότυπο "Ε + ΟΠΑ" -->
-      <svg viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g fill="#2196f3">
-          <rect x="0" y="0" width="30" height="15"/>
-          <rect x="0" y="25" width="30" height="15"/>
-          <rect x="0" y="50" width="30" height="15"/>
-          <rect x="50" y="20" width="15" height="40"/>
-          <rect x="40" y="30" width="35" height="15"/>
-          <circle cx="100" cy="35" r="20"/>
-          <rect x="140" y="15" width="15" height="50"/>
-          <rect x="155" y="15" width="25" height="15"/>
-          <rect x="155" y="30" width="25" height="15"/>
-          <polygon points="200,65 185,15 215,15"/>
-          <rect x="193" y="30" width="14" height="8"/>
-        </g>
-      </svg>
-    </div>
-    <!-- Αν δεν είναι συνδεδεμένος ο χρήστης -->
-    <div class="auth-links" sec:authorize="!isAuthenticated()">
-      <a th:href="@{/login}">Log In</a>
-      <a th:href="@{/register}">Sign In</a>
-    </div>
-    <!-- Εάν είναι συνδεδεμένος ο χρήστης, εμφανίζεται το εμφανιζόμενο όνομα (displayName) -->
-    <div class="profile-info" sec:authorize="isAuthenticated()">
-      <a th:href="@{/profile}" style="color: #fff; text-decoration: none;">
-        <span sec:authentication="principal.displayName">Χρήστης</span>
-      </a>
-    </div>
-    <h1>Οικονομικό Πανεπιστήμιο Αθηνών</h1>
-    <p>Συνεργαζόμενα Πανεπιστήμια & Μαθήματα</p>
-  </header>
-  <nav>
-    <a href="#" class="nav-item" onclick="showHome()">ΑΡΧΙΚΗ</a>
-    <div class="dropdown">
-      <a href="#" class="nav-item">ΤΜΗΜΑΤΑ</a>
-      <div class="dropdown-content">
-        <a href="#" onclick="showDepartment('Οικονομικής Επιστήμης')">Οικονομικής Επιστήμης</a>
-        <a href="#" onclick="showDepartment('Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών')">Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών</a>
-        <a href="#" onclick="showDepartment('Διοικητικής Επιστήμης και Τεχνολογίας')">Διοικητικής Επιστήμης και Τεχνολογίας</a>
-        <a href="#" onclick="showDepartment('Οργάνωσης και Διοίκησης Επιχειρήσεων')">Οργάνωσης και Διοίκησης Επιχειρήσεων</a>
-        <a href="#" onclick="showDepartment('Μάρκετινγκ και Επικοινωνίας')">Μάρκετινγκ και Επικοινωνίας</a>
-        <a href="#" onclick="showDepartment('Στατιστικής')">Στατιστικής</a>
-      </div>
-    </div>
-  </nav>
-  <div class="container" id="content"></div>
-  
-  <!-- Forum Modal Overlay -->
-  <div id="forumModalOverlay" onclick="closeForumModal()"></div>
-  <!-- Forum Modal -->
-  <div id="forumModal">
-    <h2>Μοιράσου την εμπειρία σου</h2>
-    <form id="forumForm">
-      <label for="forumDepartment">Τμήμα:</label>
-      <select id="forumDepartment" onchange="fetchForumUniversities(this.value)">
-        <option value="">-- Επιλέξτε Τμήμα --</option>
-        <option value="Οικονομικής Επιστήμης">Οικονομικής Επιστήμης</option>
-        <option value="Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών">Διεθνών και Ευρωπαϊκών Οικονομικών Σπουδών</option>
-        <option value="Διοικητικής Επιστήμης και Τεχνολογίας">Διοικητικής Επιστήμης και Τεχνολογίας</option>
-        <option value="Οργάνωσης και Διοίκησης Επιχειρήσεων">Οργάνωσης και Διοίκησης Επιχειρήσεων</option>
-        <option value="Μάρκετινγκ και Επικοινωνίας">Μάρκετινγκ και Επικοινωνίας</option>
-        <option value="Στατιστικής">Στατιστικής</option>
-      </select>
-      <br><br>
-      <label for="forumCountry">Χώρα:</label>
-      <select id="forumCountry" onchange="populateForumUniversities(this.value)">
-        <option value="">-- Επιλέξτε Χώρα --</option>
-      </select>
-      <br><br>
-      <label for="forumUniversity">Συνεργαζόμενο Πανεπιστήμιο:</label>
-      <select id="forumUniversity">
-        <option value="">-- Επιλέξτε Πανεπιστήμιο --</option>
-      </select>
-      <br><br>
-      <label for="forumExperience">Εμπειρία:</label>
-      <textarea id="forumExperience" rows="5" placeholder="Γράψτε λίγα λόγια για την εμπειρία σας..."></textarea>
-      <br><br>
-      <button type="button" onclick="submitForumPost()">Υποβολή</button>
-      <button type="button" onclick="closeForumModal()">Κλείσιμο</button>
-    </form>
-  </div>
+    
+    // Νέα συνάρτηση για φόρτωση σχολίων στο Home (από τα posts που υποβλήθηκαν μέσω του κουμπιού "Μοιράσου την εμπειρία σου")
+    async function loadHomeComments() {
+      try {
+        const response = await fetch('/api/forumPosts');
+        const posts = await response.json();
+        let html = '<table class="comment-table" id="homeCommentTable">';
+        html += '<thead><tr><th>Σχόλιο</th></tr></thead><tbody>';
+        if (posts.length === 0) {
+          html += '<tr><td>Δεν υπάρχουν σχόλια ακόμη.</td></tr>';
+        } else {
+          posts.forEach(post => {
+            html += `<tr><td><strong>${post.username}</strong> - ${new Date(post.timestamp).toLocaleString()}<br>${post.experience}</td></tr>`;
+          });
+        }
+        html += '</tbody></table>';
+        document.getElementById("studentComments").innerHTML = html;
+      } catch (error) {
+        console.error("Σφάλμα φόρτωσης σχολίων:", error);
+        document.getElementById("studentComments").innerHTML = '<p>Σφάλμα φόρτωσης σχολίων.</p>';
+      }
+    }
 
-  <!-- Info Modal Overlay -->
-  <div id="infoModalOverlay" onclick="closeUniversityInfoModal()"></div>
-  <!-- Info Modal (για πληροφορίες πανεπιστημίου) -->
-  <div id="infoModal">
-    <h2 id="infoTitle"></h2>
-    <p id="infoCity"></p>
-    <p id="infoDescription"></p>
-    <div id="infoComments"></div>
-    <br>
-    <button onclick="showCommentsInInfoModal()">Δείτε Σχόλια</button>
-    <button onclick="closeUniversityInfoModal()">Κλείσιμο</button>
-  </div>
-  
-  <footer>
-    <p>&copy; 2025 Οικονομικό Πανεπιστήμιο Αθηνών</p>
-  </footer>
+    
+    // Συνάρτηση για redirect στη σελίδα των μαθημάτων
+    function openCoursesPage() {
+      window.location.href = "/courses?university=" + encodeURIComponent(selectedUniversity);
+    }
+    
+    // Συνάρτηση για toggle του Sidebar (δεξιά container)
+    function toggleSidebar() {
+      const sidebar = document.getElementById("mySidebar");
+      if (sidebar.style.width === "320px") {
+        sidebar.style.width = "0";
+      } else {
+        sidebar.style.width = "320px";
+      }
+    }
+    
+    // ΝΕΕΣ Συναρτήσεις για τα κουμπιά στο Sidebar
+    function redirectToProfile() {
+      window.location.href = "/profile";
+    }
+
+    function redirectToDeclarations() {
+      window.location.href = "/declarations";
+    }
+
+    function redirectToSettings() {
+      window.location.href = "/settings";
+    }
+
+    function signOut() {
+      // Εδώ μπορεί να προστεθεί λογική αποσύνδεσης αν απαιτείται.
+      window.location.href = "/login";
+    }
+  </script>
 </body>
 </html>

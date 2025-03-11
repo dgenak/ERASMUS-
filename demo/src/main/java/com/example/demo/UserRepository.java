@@ -4,9 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Αναζήτηση χρήστη βάσει του registrationNumber (login key)
-    User findByRegistrationNumber(String registrationNumber);
-
-    // Εάν χρειάζεται και αναζήτηση βάσει του εμφανιζόμενου ονόματος
+    // Αναζήτηση χρήστη βάσει του username (login key)
     User findByUsername(String username);
+
+    // Μπορείς να έχεις και μέθοδο για τον αριθμό μητρώου αν χρειαστεί
+    User findByRegistrationNumber(String registrationNumber);
 }

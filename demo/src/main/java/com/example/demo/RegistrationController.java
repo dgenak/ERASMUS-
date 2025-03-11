@@ -26,28 +26,27 @@ public class RegistrationController {
     
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
-         // Ελέγχουμε μοναδικότητα βάσει του registrationNumber
-         if(userRepository.findByRegistrationNumber(user.getRegistrationNumber()) != null){
-             redirectAttributes.addFlashAttribute("error", "Ο αριθμός μητρώου υπάρχει ήδη.");
+         // Ελέγχουμε αν υπάρχει ήδη χρήστης με το ίδιο username (login key)
+         if(userRepository.findByUsername(user.getUsername()) != null){
+             redirectAttributes.addFlashAttribute("error", "Το username υπάρχει ήδη.");
              return "redirect:/register";
          }
          
-         // Αποθηκεύουμε τον raw κωδικό πριν τον κωδικοποιήσουμε (για το auto login)
+         // Αποθηκεύουμε τον raw κωδικό για το auto login
          String rawPassword = user.getPassword();
          
-         // Κωδικοποιούμε και αποθηκεύουμε τον χρήστη
+         // Κωδικοποίηση και αποθήκευση του χρήστη
          user.setPassword(passwordEncoder.encode(user.getPassword()));
-         // Ορίζουμε τον ρόλο "USER"
          user.setRoles(Set.of("USER"));
          userRepository.save(user);
          
-         // Δημιουργούμε authentication token χρησιμοποιώντας το registrationNumber ως login key
+         // Auto login: Χρησιμοποιούμε το username για το authentication
          UsernamePasswordAuthenticationToken authToken =
-             new UsernamePasswordAuthenticationToken(user.getRegistrationNumber(), rawPassword);
+             new UsernamePasswordAuthenticationToken(user.getUsername(), rawPassword);
          Authentication authentication = authenticationManager.authenticate(authToken);
          SecurityContextHolder.getContext().setAuthentication(authentication);
          
-         // Ανακατευθύνουμε στην αρχική σελίδα μετά την εγγραφή (auto login)
+         // Ανακατεύθυνση στην αρχική σελίδα
          return "redirect:/";
     }
 }

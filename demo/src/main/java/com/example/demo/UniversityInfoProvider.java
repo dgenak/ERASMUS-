@@ -1516,6 +1516,103 @@ public class UniversityInfoProvider {
             "Βουκουρέστι, Ρουμανία",
             "Η Academia de Studii Economice din Bucuresti (ASE), στη Βουκουρέστι, είναι το κορυφαίο ίδρυμα οικονομικών της Ρουμανίας. Διακρίνεται για τα ισχυρά προγράμματά της, την εφαρμοσμένη έρευνα και τις διεθνείς συνεργασίες, συνδυάζοντας ιστορική παράδοση με σύγχρονες μεθόδους διδασκαλίας."
         ));
+        universityInfoMap.put("Universität Wien", new UniversityInfo(
+    "Βιέννη, Αυστρία",
+    "Η Universität Wien, ιδρυμένη το 1365, είναι ένα από τα αρχαιότερα και μεγαλύτερα πανεπιστήμια στην Ευρώπη. Βρίσκεται στην καρδιά της Βιέννης, πόλη γνωστή για την ιστορία, την τέχνη και την ποιότητα ζωής της."
+        ));
+
+        universityInfoMap.put("University of Cyprus", new UniversityInfo(
+            "Λευκωσία, Κύπρος",
+            "Το University of Cyprus ιδρύθηκε το 1989 και αποτελεί το κύριο ακαδημαϊκό ίδρυμα της χώρας. Είναι επικεντρωμένο στην προαγωγή της έρευνας και προσφέρει πληθώρα μαθημάτων στις επιστήμες και τις ανθρωπιστικές σπουδές."
+        ));
+
+        universityInfoMap.put("Telecom Paris", new UniversityInfo(
+            "Παρίσι, Γαλλία",
+            "Το Telecom Paris, μέρος του Institut Polytechnique de Paris, είναι κορυφαίο στον τομέα της πληροφορικής και των τηλεπικοινωνιών. Βρίσκεται στο Παρίσι, πόλη κόμβος για την τεχνολογία, τον πολιτισμό και την καινοτομία."
+        ));
+
+        universityInfoMap.put("CY TECH", new UniversityInfo(
+            "Παρίσι, Γαλλία",
+            "Το CY TECH βρίσκεται στην περιοχή του Παρισιού και είναι γνωστό για τα προγράμματα στις μηχανικές και την πληροφορική. Η πόλη είναι ένα μεγάλο ακαδημαϊκό κέντρο, προσφέροντας στους φοιτητές πολλές ευκαιρίες για σπουδές και εργασία σε διεθνές περιβάλλον."
+        ));
+
+        universityInfoMap.put("EXCELIA", new UniversityInfo(
+            "La Rochelle, Γαλλία",
+            "Το EXCELIA στη La Rochelle είναι ευρέως γνωστό για τα προγράμματα διοίκησης και επιχειρήσεων. La Rochelle, μια όμορφη παραθαλάσσια πόλη, προσφέρει ένα ιδανικό περιβάλλον για σπουδές με τον συνδυασμό της ιστορίας, της φύσης και της αγοράς εργασίας."
+        ));
+
+        universityInfoMap.put("Freie Universität Berlin", new UniversityInfo(
+            "Βερολίνο, Γερμανία",
+            "Η Freie Universität Berlin, ένα από τα κορυφαία πανεπιστήμια στη Γερμανία, είναι διάσημη για τα προγράμματα των ανθρωπιστικών επιστημών και τις κοινωνικές επιστήμες."
+        ));
+
+        universityInfoMap.put("Technische Universität München", new UniversityInfo(
+            "Μόναχο, Γερμανία",
+            "Το Technische Universität München είναι κορυφαίο στην Ευρώπη για τη μηχανική και την τεχνολογία. Βρίσκεται στο Μόναχο, πόλη γνωστή για την τεχνολογική καινοτομία και την υψηλή ποιότητα ζωής."
+        ));
+
+        universityInfoMap.put("Aalborg Universitet", new UniversityInfo(
+            "Aalborg, Δανία",
+            "Το Aalborg Universitet διακρίνεται για την προσέγγιση 'πρόβλημα-μάθηση', με έμφαση στην ομαδική εργασία και τα προγράμματα μηχανικής."
+        ));
+
+        universityInfoMap.put("Università degli Studi di Perugia", new UniversityInfo(
+            "Perugia, Ιταλία",
+            "Το Università degli Studi di Perugia, ιδρυμένο το 1308, είναι ένα από τα αρχαιότερα πανεπιστήμια στην Ιταλία και είναι γνωστό για τα προγράμματα στις ανθρωπιστικές επιστήμες και το δίκαιο."
+        ));
+
+        universityInfoMap.put("Vilnius University", new UniversityInfo(
+            "Vilnius, Λιθουανία",
+            "Το Vilnius University, ιδρυμένο το 1579, είναι το μεγαλύτερο και παλαιότερο πανεπιστήμιο στη Λιθουανία. Είναι γνωστό για τις ανθρωπιστικές και φυσικές επιστήμες."
+        ));
+
+        universityInfoMap.put("Eindhoven University of Technology", new UniversityInfo(
+            "Eindhoven, Ολλανδία",
+            "Η Eindhoven University of Technology είναι ηγέτης στην τεχνολογική καινοτομία και την επιχειρηματική εκπαίδευση. Η Eindhoven είναι γνωστή ως 'η πόλη της φωτός' λόγω της στενής σχέσης της με την εταιρεία Philips."
+        ));
+
+        universityInfoMap.put("Norwegian University of Science & Technology (NTNU)", new UniversityInfo(
+            "Τρόντχαϊμ, Νορβηγία",
+            "Το NTNU στο Τρόντχαϊμ είναι το κύριο κέντρο για την τεχνολογική εκπαίδευση και έρευνα στη Νορβηγία. Είναι διάσημο για τις μηχανικές και τις φυσικές επιστήμες."
+        ));
+
+        universityInfoMap.put("Instituto Politecnico Da Guarda (IPG)", new UniversityInfo(
+            "Guarda, Πορτογαλία",
+            "Το IPG προσφέρει ποικιλία προγραμμάτων στην τεχνολογία, τις κοινωνικές επιστήμες, και τη διοίκηση."
+        ));
+
+        universityInfoMap.put("University of Deusto", new UniversityInfo(
+            "Μπιλμπάο, Ισπανία",
+            "Το University of Deusto στο Μπιλμπάο προσφέρει προηγμένα προγράμματα στη διοίκηση και τις κοινωνικές επιστήμες. Είναι γνωστό για τον σύγχρονο καμπους και την έμφαση στη διεθνή εκπαίδευση."
+        ));
+
+        universityInfoMap.put("Universidad Publica de Navarra", new UniversityInfo(
+            "Παμπλόνα, Ισπανία",
+            "Η Universidad Publica de Navarra στην Παμπλόνα προσφέρει πλήρες φάσμα ακαδημαϊκών προγραμμάτων, εστιασμένα στις επιστήμες, την τεχνολογία, και την υγεία. Η πόλη είναι διάσημη για το Φεστιβάλ του Αγίου Φερμίν."
+        ));
+
+        universityInfoMap.put("Universidad Rey Juan Carlos", new UniversityInfo(
+            "Μαδρίτη, Ισπανία",
+            "Βρίσκεται στη Μαδρίτη, το Universidad Rey Juan Carlos είναι γνωστό για τα προγράμματα στην τεχνολογία, τις επιστήμες υγείας και τις νομικές σπουδές."
+        ));
+
+        universityInfoMap.put("Stockholm University - Department of Computer and Systems Sciences", new UniversityInfo(
+            "Στοκχόλμη, Σουηδία",
+            "Το Stockholm University είναι γνωστό για την έμφασή του στις επιστήμες του υπολογιστή και τις συστημικές επιστήμες."
+        ));
+        universityInfoMap.put("Norwegian University of Science & Technology (NTNU)", new UniversityInfo(
+            "Τρόντχαϊμ, Νορβηγία",
+            "Το NTNU στο Τρόντχαϊμ είναι το κύριο κέντρο για την τεχνολογική εκπαίδευση και έρευνα στη Νορβηγία. Είναι διάσημο για τις μηχανικές και τις φυσικές επιστήμες."
+        ));
+        universityInfoMap.put("Sorbonne University - Sciences", new UniversityInfo(
+            "Παρίσι, Γαλλία",
+            "Η Sorbonne University - Sciences, γνωστή για την εξαιρετική έρευνα στις επιστήμες, βρίσκεται στο Παρίσι. Προσφέρει πλούσιο ακαδημαϊκό περιβάλλον με έμφαση στην έρευνα και την καινοτομία."
+        ));
+
+        universityInfoMap.put("ENSIIE", new UniversityInfo(
+            "Évry, Γαλλία",
+            "Το ENSIIE στο Évry προσφέρει εξειδικευμένα προγράμματα στην πληροφορική και την επιχειρησιακή ανάλυση. Είναι κοντά στο Παρίσι, παρέχοντας πρόσβαση σε επαγγελματικές ευκαιρίες και πολιτιστική ποικιλομορφία."
+        ));
     }
 
     public static Map<String, UniversityInfo> getUniversityInfoMap() {
