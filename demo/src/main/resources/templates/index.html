@@ -15,6 +15,29 @@
   <link rel="stylesheet" th:href="@{/css/styles.css}">
 
   <style>
+    /* Εξτρά Στυλ για τον τίτλο ώστε να είναι πιο εμφανίσιμος */
+    .header-title {
+      font-size: 64px;                /* Μεγαλύτερη γραμματοσειρά */
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+      animation: fadeInZoom 1.5s ease-out;
+      transition: transform 0.3s ease;
+    }
+    .header-title:hover {
+      transform: scale(1.05);
+    }
+    @keyframes fadeInZoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
     /* ========== Βασικό Styling ========== */
     body {
       font-family: 'Poppins', sans-serif;
@@ -39,7 +62,6 @@
       position: relative;
     }
     /* ΑΦΑΙΡΕΘΗΚΕ ΟΛΟΚΛΗΡΟ ΤΟ div.logo ΜΕ ΤΟ SVG */
-
     .auth-links {
       position: absolute;
       top: 10px;
@@ -181,14 +203,13 @@
       font-size: 30px;
       cursor: pointer;
       text-decoration: none;
-      text-align: left; /* Προσθέτουμε αυτή τη γραμμή για στοίχιση προς τα αριστερά */
+      text-align: left; /* Στοίχιση προς τα αριστερά */
       max-width: 250px;
       margin-top: 20px;
       transition: box-shadow 0.2s ease, transform 0.2s ease;
       white-space: normal;
       word-wrap: break-word;
     }
-
     .custom-button:hover {
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       transform: translateY(-2px);
@@ -221,7 +242,6 @@
         border-radius: 15px;         /* Στρογγυλεμένες γωνίες */
         overflow: hidden;           /* Εξασφάλιση εφαρμογής border-radius */
     }
-
     .comment-table th {
         background-color: #00509e;
         color: #fff;
@@ -229,23 +249,21 @@
         text-align: left;
         font-size: 18px;
     }
-
     .comment-table td {
         border: 1px solid #ddd;
         padding: 14px;
         font-size: 16px;
     }
-
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
     /* Modal Styling */
-    #forumModal, #forumModalOverlay, #infoModal, #infoModalOverlay {
+    #forumModal, #forumModalOverlay, #infoModal, #infoModalOverlay,
+    #profileModal, #profileModalOverlay {
       transition: opacity 0.3s ease;
     }
-    #forumModalOverlay, #infoModalOverlay {
+    #forumModalOverlay, #infoModalOverlay, #profileModalOverlay {
       position: fixed;
       top: 0;
       left: 0;
@@ -281,6 +299,21 @@
       z-index: 1100;
       width: 90%;
       max-width: 600px;
+      display: none;
+    }
+    /* Profile Modal Styling */
+    #profileModal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 1150;
+      width: 90%;
+      max-width: 500px;
       display: none;
     }
     /* Στυλ για το Sidebar (δεξιά) */
@@ -322,7 +355,6 @@
       cursor: pointer;
       z-index: 800;
     }
-
     .openbtn:hover {
       background-color: #0073e6;
     }
@@ -374,17 +406,14 @@
       <a th:href="@{/login}">Log In</a>
       <a th:href="@{/register}">Sign In</a>
     </div>
-
     <!-- Εάν είναι συνδεδεμένος ο χρήστης, εμφανίζεται το εμφανιζόμενο όνομα (πάνω αριστερά πλέον) -->
     <div class="profile-info" sec:authorize="isAuthenticated()">
-      <a th:href="@{/profile}" style="color: #fff; text-decoration: none;">
+      <a href="#" style="color: #fff; text-decoration: none;" onclick="openProfileModal()">
         <span sec:authentication="principal.displayName">Χρήστης</span>
       </a>
     </div>
-
-    <h1>Οικονομικό Πανεπιστήμιο Αθηνών</h1>
-    <p>Συνεργαζόμενα Πανεπιστήμια & Μαθήματα</p>
-
+    <!-- Ο τίτλος με την προσθήκη της κλάσης header-title για πιο εμφανή styling -->
+    <h1 class="header-title">Eropa</h1>
     <!-- Κουμπί sidebar (fixed, ίδιο background με header) -->
     <button class="openbtn" onclick="toggleSidebar()">☰</button>
   </header>
@@ -403,6 +432,7 @@
         <a href="#" onclick="showDepartment('Πληροφορικής')">Πληροφορικής</a>
       </div>
     </div>
+    <a href="#" class="nav-item" onclick="showApplication()">ΑΙΤΗΣΕΙΣ</a>
   </nav>
 
   <!-- Κεντρικό container για δυναμικό περιεχόμενο -->
@@ -458,6 +488,29 @@
     <button onclick="closeUniversityInfoModal()">Κλείσιμο</button>
   </div>
 
+  <!-- Profile Modal Overlay -->
+  <div id="profileModalOverlay" onclick="closeProfileModal()"></div>
+  <!-- Profile Modal -->
+  <div id="profileModal">
+    <h2>Προφίλ Χρήστη</h2>
+    <form id="profileForm">
+      <label for="profileFirstName">Όνομα:</label>
+      <input type="text" id="profileFirstName" placeholder="Κενό">
+      <br><br>
+      <label for="profileLastName">Επίθετο:</label>
+      <input type="text" id="profileLastName" placeholder="Κενό">
+      <br><br>
+      <label for="profileDepartment">Τμήμα:</label>
+      <input type="text" id="profileDepartment" placeholder="Κενό">
+      <br><br>
+      <label for="profileYear">Έτος Φοίτησης:</label>
+      <input type="text" id="profileYear" placeholder="Κενό">
+      <br><br>
+      <button type="button" onclick="saveProfile()">Αποθήκευση</button>
+      <button type="button" onclick="closeProfileModal()">Κλείσιμο</button>
+    </form>
+  </div>
+
   <!-- Sidebar (δεξιά) με το ημερολόγιο -->
   <div id="mySidebar" class="sidebar">
     <span class="closebtn" onclick="toggleSidebar()">&times;</span>
@@ -496,8 +549,8 @@
     </div>
     <!-- ΝΕΕΣ Επιλογές στο Sidebar -->
     <div class="sidebar-buttons" style="padding: 20px; text-align: center;">
-      <button onclick="redirectToProfile()" style="display: block; margin: 10px auto; width: 90%;">Το προφίλ σου</button>
-      <button onclick="redirectToDeclarations()" style="display: block; margin: 10px auto; width: 90%;">Οι δηλώσεις σου</button>
+      <button onclick="openProfileModal()" style="display: block; margin: 10px auto; width: 90%;">Το προφίλ μου</button>
+      <button onclick="redirectToDeclarations()" style="display: block; margin: 10px auto; width: 90%;">Οι δηλώσεις μου</button>
       <button onclick="redirectToSettings()" style="display: block; margin: 10px auto; width: 90%;">Ρυθμίσεις</button>
       <button onclick="signOut()" style="display: block; margin: 10px auto; width: 90%;">Sign out</button>
     </div>
@@ -700,7 +753,6 @@
         if (response.ok) {
           alert('Η εμπειρία σας καταχωρήθηκε επιτυχώς.');
           closeForumModal();
-          // Ενημέρωση πίνακα σχολίων στην αρχική σελίδα
           loadHomeComments();
         } else {
           alert('Παρουσιάστηκε σφάλμα κατά την καταχώρηση.');
@@ -711,7 +763,6 @@
       }
     }
 
-
     function openForumModal() {
       document.getElementById("forumModal").style.display = "block";
       document.getElementById("forumModalOverlay").style.display = "block";
@@ -721,7 +772,7 @@
       document.getElementById("forumModalOverlay").style.display = "none";
     }
     
-    // Νέα συνάρτηση για φόρτωση σχολίων στο Home (από τα posts που υποβλήθηκαν μέσω του κουμπιού "Μοιράσου την εμπειρία σου")
+    // Συνάρτηση για φόρτωση σχολίων στο Home (από τα posts που υποβλήθηκαν μέσω του κουμπιού "Μοιράσου την εμπειρία σου")
     async function loadHomeComments() {
       try {
         const response = await fetch('/api/forumPosts');
@@ -743,7 +794,6 @@
       }
     }
 
-    
     // Συνάρτηση για redirect στη σελίδα των μαθημάτων
     function openCoursesPage() {
       window.location.href = "/courses?university=" + encodeURIComponent(selectedUniversity);
@@ -759,22 +809,41 @@
       }
     }
     
-    // ΝΕΕΣ Συναρτήσεις για τα κουμπιά στο Sidebar
-    function redirectToProfile() {
-      window.location.href = "/profile";
+    // Συνάρτηση για άνοιγμα του Profile Modal (για το username και το κουμπί "Το προφίλ σου")
+    function openProfileModal() {
+      document.getElementById("profileModal").style.display = "block";
+      document.getElementById("profileModalOverlay").style.display = "block";
     }
-
+    function closeProfileModal() {
+      document.getElementById("profileModal").style.display = "none";
+      document.getElementById("profileModalOverlay").style.display = "none";
+    }
+    function saveProfile() {
+      const firstName = document.getElementById("profileFirstName").value;
+      const lastName = document.getElementById("profileLastName").value;
+      const department = document.getElementById("profileDepartment").value;
+      const year = document.getElementById("profileYear").value;
+      alert("Όνομα: " + firstName + "\nΕπίθετο: " + lastName + "\nΤμήμα: " + department + "\nΈτος Φοίτησης: " + year);
+      closeProfileModal();
+    }
+    
+    // Συνάρτηση για τα κουμπιά στο Sidebar (εκτός του προφίλ που ανοίγει modal)
     function redirectToDeclarations() {
       window.location.href = "/declarations";
     }
-
     function redirectToSettings() {
       window.location.href = "/settings";
     }
-
     function signOut() {
-      // Εδώ μπορεί να προστεθεί λογική αποσύνδεσης αν απαιτείται.
       window.location.href = "/login";
+    }
+    
+    // Συνάρτηση για το "Φτιάξε την αίτηση σου"
+    function showApplication() {
+      document.getElementById("content").innerHTML = `
+        <h2>Φτιάξε την αίτησή σου</h2>
+        <p>Εδώ μπορείτε να δημιουργήσετε την αίτησή σας για το πρόγραμμα Erasmus.</p>
+      `;
     }
   </script>
 </body>
