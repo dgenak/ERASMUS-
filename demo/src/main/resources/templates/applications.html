@@ -8,7 +8,7 @@
   <!-- Meta tags για CSRF (θα αντικατασταθούν από το Thymeleaf) -->
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-  <title>ΟΠΑ - ERASMUS | Μαθήματα</title>
+  <title>ΟΠΑ - ERASMUS | Αιτήσεις</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap" rel="stylesheet">
   <!-- Εξωτερικό αρχείο CSS (styles.css πρέπει να βρίσκεται στο src/main/resources/static/css) -->
@@ -137,46 +137,9 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       animation: fadeIn 0.5s ease;
     }
-    /* Styling για τα μαθήματα (grid εξάμηνων) */
-    .university-name {
-      text-align: center;
-      font-size: 32px;
-      margin-bottom: 30px;
-      color: #003366;
-    }
-    .semesters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .semester {
-      width: 250px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .semester h3 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #00509e;
-    }
-    .course-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .course-list li {
-      padding: 5px 0;
-      border-bottom: 1px solid #eee;
-    }
-    .course-list li:last-child {
-      border-bottom: none;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* Styling για το περιεχόμενο αιτήσεων */
+    .applications-content {
+      margin-top: 20px;
     }
     /* Styling για τα modals */
     #forumModalOverlay, #infoModalOverlay, #profileModalOverlay {
@@ -309,7 +272,7 @@
     }
   </style>
 </head>
-<body onload="showCourses()">
+<body onload="showApplications()">
   <header>
     <!-- Αν δεν είναι συνδεδεμένος ο χρήστης -->
     <div class="auth-links" sec:authorize="!isAuthenticated()">
@@ -341,83 +304,20 @@
         <a href="#" onclick="showDepartment('Πληροφορικής')">Πληροφορικής</a>
       </div>
     </div>
-    <a href="#" class="nav-item" onclick="showApplication()">ΑΙΤΗΣΕΙΣ</a>
+    <a href="#" class="nav-item" onclick="showApplications()">ΑΙΤΗΣΕΙΣ</a>
   </nav>
   
-  <!-- Container για τα μαθήματα -->
+  <!-- Container για το περιεχόμενο της σελίδας αιτήσεων -->
   <div class="container" id="content">
-    <!-- Εμφάνιση του ονόματος του Πανεπιστημίου -->
-    <div class="university-name" th:text="${university}">Όνομα Πανεπιστημίου</div>
-    <!-- Grid 8 εξάμηνων με τα μαθήματα -->
-    <div class="semesters">
-      <div class="semester">
-        <h3>Εξάμηνο 1</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
-      <div class="semester">
-        <h3>Εξάμηνο 2</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
-      <div class="semester">
-        <h3>Εξάμηνο 3</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
-      <div class="semester">
-        <h3>Εξάμηνο 4</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
-      <div class="semester">
-        <h3>Εξάμηνο 5</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
-      <div class="semester">
-        <h3>Εξάμηνο 6</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
-      <div class="semester">
-        <h3>Εξάμηνο 7</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
-      <div class="semester">
-        <h3>Εξάμηνο 8</h3>
-        <ul class="course-list">
-          <li>Μάθημα 1</li>
-          <li>Μάθημα 2</li>
-          <li>Μάθημα 3</li>
-        </ul>
-      </div>
+    <!-- Μπορείς να εμφανίσεις εδώ το header για τις αιτήσεις ή άλλο περιεχόμενο -->
+    <div class="university-name">Οι Αιτήσεις μου για το Erasmus</div>
+    <div class="applications-content">
+      <p>Εδώ εμφανίζονται οι αιτήσεις που έχεις υποβάλει.</p>
+      <!-- Πρόσθεσε πίνακα, λίστα ή φόρμα ανάλογα με τις ανάγκες σου -->
     </div>
   </div>
   
-  <!-- Sidebar όπως στο αρχικό index -->
+  <!-- Sidebar όπως στο index -->
   <div id="mySidebar" class="sidebar">
     <span class="closebtn" onclick="toggleSidebar()">&times;</span>
     <div class="calendar-container">
@@ -453,12 +353,11 @@
         </tbody>
       </table>
     </div>
-    <!-- ΝΕΕΣ Επιλογές στο Sidebar -->
-    <div class="sidebar-buttons" style="padding: 20px; text-align: center;">
-      <button onclick="openProfileModal()" style="display: block; margin: 10px auto; width: 90%;">Το προφίλ μου</button>
-      <button onclick="redirectToDeclarations()" style="display: block; margin: 10px auto; width: 90%;">Οι δηλώσεις μου</button>
-      <button onclick="redirectToSettings()" style="display: block; margin: 10px auto; width: 90%;">Ρυθμίσεις</button>
-      <button onclick="signOut()" style="display: block; margin: 10px auto; width: 90%;">Sign out</button>
+    <div class="sidebar-buttons" style="padding:20px; text-align:center;">
+      <button onclick="openProfileModal()" style="display:block; margin:10px auto; width:90%;">Το προφίλ μου</button>
+      <button onclick="redirectToDeclarations()" style="display:block; margin:10px auto; width:90%;">Οι δηλώσεις μου</button>
+      <button onclick="redirectToSettings()" style="display:block; margin:10px auto; width:90%;">Ρυθμίσεις</button>
+      <button onclick="signOut()" style="display:block; margin:10px auto; width:90%;">Sign out</button>
     </div>
   </div>
   
@@ -470,10 +369,11 @@
     // Ανάκτηση CSRF τιμών
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
-
-    // Dummy συνάρτηση φόρτωσης της σελίδας μαθημάτων
-    function showCourses() {
-      console.log("Σελίδα μαθημάτων φορτώθηκε");
+    
+    // Dummy συνάρτηση φόρτωσης της σελίδας αιτήσεων
+    function showApplications() {
+      console.log("Σελίδα αιτήσεων φορτώθηκε");
+      // Μπορείς να προσθέσεις επιπλέον λογική για την φόρτωση δεδομένων, αν χρειάζεται.
     }
     
     // Συνάρτηση για toggle του Sidebar (όπως στο index)
@@ -486,29 +386,13 @@
       }
     }
     
-    // Διορθωμένες συναρτήσεις για το menu:
-    function showDepartment(dept) {
-      // Ανακατεύθυνση στη σελίδα των τμημάτων με το επιλεγμένο τμήμα ως παράμετρο
-      window.location.href = "/departments?department=" + encodeURIComponent(dept);
-    }
-    function showApplication() {
-      // Ανακατεύθυνση στη σελίδα αιτήσεων
-      window.location.href = "/applications";
-    }
-    
     // Dummy συναρτήσεις για τις μεταβάσεις και τα modals
     function showHome() { window.location.href = "/"; }
-    function closeForumModal() {
-      document.getElementById("forumModal").style.display = "none";
-      document.getElementById("forumModalOverlay").style.display = "none";
-    }
-    function closeUniversityInfoModal() {
-      document.getElementById("infoModal").style.display = "none";
-      document.getElementById("infoModalOverlay").style.display = "none";
-    }
-    function showCommentsInInfoModal() { /* ... */ }
-    function submitForumPost() { /* ... */ }
-    function openCoursesPage() { window.location.href = "/courses"; }
+    function showDepartment(dept) { window.location.href = "/departments?department=" + encodeURIComponent(dept); }
+    function redirectToDeclarations() { window.location.href = "/declarations"; }
+    function redirectToSettings() { window.location.href = "/settings"; }
+    function signOut() { window.location.href = "/login"; }
+    
     function openProfileModal() {
       document.getElementById("profileModal").style.display = "block";
       document.getElementById("profileModalOverlay").style.display = "block";
@@ -517,10 +401,6 @@
       document.getElementById("profileModal").style.display = "none";
       document.getElementById("profileModalOverlay").style.display = "none";
     }
-    function saveProfile() { /* ... */ }
-    function redirectToDeclarations() { window.location.href = "/declarations"; }
-    function redirectToSettings() { window.location.href = "/settings"; }
-    function signOut() { window.location.href = "/login"; }
   </script>
 </body>
 </html>

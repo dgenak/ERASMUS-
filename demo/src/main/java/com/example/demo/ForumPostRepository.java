@@ -1,6 +1,9 @@
 package com.example.demo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.demo.model.ForumPost;
+
 import java.util.List;
 
 public interface ForumPostRepository extends JpaRepository<ForumPost, Long> {
