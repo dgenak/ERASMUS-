@@ -770,7 +770,14 @@
       const department = document.getElementById('forumDepartment').value;
       const university = document.getElementById('forumUniversity').value;
       const experience = document.getElementById('forumExperience').value;
-      const data = { department, university, experience };
+      // <-- πρόσθεσε type: 'experience'
+      const data = {
+        type: 'experience',
+        department,
+        university,
+        experience
+      };
+
       try {
         const response = await fetch('/api/forumPosts', {
           method: 'POST',
@@ -792,6 +799,7 @@
         alert('Σφάλμα κατά την αποστολή της εμπειρίας.');
       }
     }
+
 
     // Νέες συναρτήσεις για το Forum
 
@@ -866,7 +874,8 @@
     async function submitForumQuestion() {
       const title = document.getElementById("questionTitle").value;
       const body = document.getElementById("questionBody").value;
-      const data = { title, body };
+      // Προσθέτουμε το πεδίο type: 'question'
+      const data = { type: 'question', title, body };
       try {
         const response = await fetch('/api/forumPosts', {
           method: 'POST',
@@ -876,7 +885,7 @@
           },
           body: JSON.stringify(data)
         });
-        if(response.ok) {
+        if (response.ok) {
           alert("Η ερώτησή σας καταχωρήθηκε επιτυχώς.");
           showForum();
         } else {
@@ -887,19 +896,22 @@
       }
     }
 
+
     async function submitForumReply(postId) {
       const replyText = document.getElementById("reply-text-" + postId).value;
-      const data = { postId, reply: replyText };
+
+      // Δημιουργούμε FormData ώστε να ταιριάζει με τα @RequestParam("postId") και @RequestParam("reply")
+      const formData = new FormData();
+      formData.append("postId", postId);
+      formData.append("reply", replyText);
+      formData.append("_csrf", csrfToken);
+
       try {
-        const response = await fetch('/api/forumReplies', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            [csrfHeader]: csrfToken
-          },
-          body: JSON.stringify(data)
+        const response = await fetch("/forum/reply/add", {
+          method: "POST",
+          body: formData
         });
-        if(response.ok) {
+        if (response.ok) {
           alert("Η απάντησή σας καταχωρήθηκε επιτυχώς.");
           showForum();
         } else {
@@ -909,6 +921,7 @@
         console.error("Σφάλμα κατά την υποβολή της απάντησης:", error);
       }
     }
+
 
     // Παλιές συναρτήσεις για το Forum Modal (αν και τώρα δεν καλούνται)
     function openForumModal() {

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 public class ForumPostDto {
 
     @NotBlank(message = "Ο τύπος του post είναι υποχρεωτικός.")
-    private String type;  // "question" ή "experience"
+    private String type; // "question" ή "experience"
 
     // Για ερώτηση
     private String title;

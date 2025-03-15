@@ -13,9 +13,11 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap" rel="stylesheet">
   <!-- Εξωτερικό αρχείο CSS -->
   <link rel="stylesheet" th:href="@{/css/styles.css}">
+
   <style>
     /* Κρατήστε εδώ το υπάρχον CSS για header, nav, container και sidebar όπως στα άλλα templates */
-    /* ... (μπορείτε να συμπεριλάβετε το ίδιο CSS όπως στο index.html) ... */
+
+    /* ... (π.χ. το ίδιο CSS από το index.html) ... */
 
     /* Styling για το περιεχόμενο του forum */
     .forum-container {
@@ -204,7 +206,6 @@
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
     
     // Dummy συνάρτηση φόρτωσης της σελίδας forum
-    function showApplications() { /* δεν χρειάζεται εδώ, χρησιμοποιούμε το /forum endpoint */ }
     function showHome() { window.location.href = "/"; }
     function showDepartment(dept) {
       window.location.href = "/departments?department=" + encodeURIComponent(dept);

@@ -1,15 +1,10 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * Entity που αντιπροσωπεύει μια απάντηση στο forum.
- */
 @Entity
+@Table(name = "forum_replies")
 public class ForumReply {
 
     @Id
@@ -17,15 +12,17 @@ public class ForumReply {
     private Long id;
 
     private String username;
-    private String body;
+    
+    @Column(length = 2000)
+    private String reply;
+
     private LocalDateTime timestamp;
 
-    // Κατασκευαστής χωρίς παραμέτρους (απαιτείται από το JPA)
-    public ForumReply() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "forum_post_id")
+    private ForumPost forumPost;
 
-    // Getters και Setters
-
+    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -42,12 +39,12 @@ public class ForumReply {
         this.username = username;
     }
 
-    public String getBody() {
-        return body;
+    public String getReply() {
+        return reply;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setReply(String reply) {
+        this.reply = reply;
     }
 
     public LocalDateTime getTimestamp() {
@@ -56,5 +53,13 @@ public class ForumReply {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public ForumPost getForumPost() {
+        return forumPost;
+    }
+
+    public void setForumPost(ForumPost forumPost) {
+        this.forumPost = forumPost;
     }
 }
