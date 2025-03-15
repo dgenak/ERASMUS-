@@ -431,15 +431,16 @@
         <a href="#" onclick="showDepartment('Πληροφορικής')">Πληροφορικής</a>
       </div>
     </div>
+    <!-- Νέο link "ERASMUS FORUM" που φορτώνει τη σελίδα του forum στο container -->
+    <a href="#" class="nav-item" onclick="showForum()">ERASMUS FORUM</a>
     <a href="#" class="nav-item" onclick="showApplication()">ΑΙΤΗΣΕΙΣ</a>
   </nav>
 
   <!-- Κεντρικό container για δυναμικό περιεχόμενο -->
   <div class="container" id="content"></div>
 
-  <!-- Forum Modal Overlay -->
+  <!-- Forum Modal (παραμένει ο αρχικός κώδικας για modal, αν και τώρα δεν καλείται) -->
   <div id="forumModalOverlay" onclick="closeForumModal()"></div>
-  <!-- Forum Modal -->
   <div id="forumModal">
     <h2>Μοιράσου την εμπειρία σου</h2>
     <form id="forumForm">
@@ -762,6 +763,123 @@
       }
     }
 
+    // Νέες συναρτήσεις για το Forum
+
+    function showForum() {
+      document.getElementById("content").innerHTML = `
+        <h2>ERASMUS FORUM</h2>
+        <div id="forumContainer"></div>
+        <h3>Κάνε μια ερώτηση</h3>
+        <form id="forumQuestionForm">
+          <input type="text" id="questionTitle" placeholder="Τίτλος ερώτησης" required style="width:100%; padding:8px; margin-bottom:10px; border:1px solid #ccc; border-radius:4px;">
+          <br>
+          <textarea id="questionBody" rows="4" placeholder="Γράψε την ερώτησή σου εδώ" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;"></textarea>
+          <br><br>
+          <button type="button" onclick="submitForumQuestion()">Υποβολή Ερώτησης</button>
+        </form>
+      `;
+      loadForumPosts();
+    }
+
+    async function loadForumPosts() {
+    try {
+      const response = await fetch('/api/forumPosts');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const posts = await response.json();
+      let html = '';
+      if (posts.length === 0) {
+        html = '<p>Δεν υπάρχουν ερωτήσεις ακόμα.</p>';
+      } else {
+        posts.forEach(post => {
+          html += `<div class="forum-post" id="post-${post.id}" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
+              <h3>${post.title}</h3>
+              <p>${post.body}</p>
+              <p><em>Από: ${post.username} - ${new Date(post.timestamp).toLocaleString()}</em></p>
+              <button onclick="toggleReplyForm(${post.id})">Απάντηση</button>
+              <div class="reply-form" id="reply-form-${post.id}" style="display:none; margin-top:10px;">
+                <textarea id="reply-text-${post.id}" rows="3" placeholder="Γράψτε την απάντησή σας..."></textarea>
+                <br>
+                <button onclick="submitForumReply(${post.id})">Υποβολή Απάντησης</button>
+              </div>
+              <div class="replies" id="replies-${post.id}" style="margin-top:10px;">`;
+          if (post.replies && post.replies.length > 0) {
+            post.replies.forEach(reply => {
+              html += `<div style="border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px;">
+                  <p>${reply.body}</p>
+                  <p><em>Από: ${reply.username} - ${new Date(reply.timestamp).toLocaleString()}</em></p>
+                </div>`;
+            });
+          } else {
+            html += `<p style="font-style: italic;">Δεν υπάρχουν απαντήσεις.</p>`;
+          }
+          html += `</div></div>`;
+        });
+      }
+      document.getElementById("forumContainer").innerHTML = html;
+    } catch (error) {
+      console.error("Σφάλμα φόρτωσης forum posts:", error);
+      document.getElementById("forumContainer").innerHTML = "<p>Σφάλμα φόρτωσης forum posts.</p>";
+    }
+  }
+    function toggleReplyForm(postId) {
+      const form = document.getElementById("reply-form-" + postId);
+      if (form.style.display === "none" || form.style.display === "") {
+        form.style.display = "block";
+      } else {
+        form.style.display = "none";
+      }
+    }
+
+    async function submitForumQuestion() {
+      const title = document.getElementById("questionTitle").value;
+      const body = document.getElementById("questionBody").value;
+      const data = { title, body };
+      try {
+        const response = await fetch('/api/forumPosts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+          },
+          body: JSON.stringify(data)
+        });
+        if(response.ok) {
+          alert("Η ερώτησή σας καταχωρήθηκε επιτυχώς.");
+          showForum();
+        } else {
+          alert("Παρουσιάστηκε σφάλμα κατά την καταχώρηση της ερώτησης.");
+        }
+      } catch (error) {
+        console.error("Σφάλμα κατά την υποβολή της ερώτησης:", error);
+      }
+    }
+
+    async function submitForumReply(postId) {
+      const replyText = document.getElementById("reply-text-" + postId).value;
+      const data = { postId, reply: replyText };
+      try {
+        const response = await fetch('/api/forumReplies', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+          },
+          body: JSON.stringify(data)
+        });
+        if(response.ok) {
+          alert("Η απάντησή σας καταχωρήθηκε επιτυχώς.");
+          showForum();
+        } else {
+          alert("Παρουσιάστηκε σφάλμα κατά την καταχώρηση της απάντησης.");
+        }
+      } catch (error) {
+        console.error("Σφάλμα κατά την υποβολή της απάντησης:", error);
+      }
+    }
+
+    // Παλιές συναρτήσεις για το Forum Modal (αν και τώρα δεν καλούνται)
     function openForumModal() {
       document.getElementById("forumModal").style.display = "block";
       document.getElementById("forumModalOverlay").style.display = "block";

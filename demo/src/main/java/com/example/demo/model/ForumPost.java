@@ -1,27 +1,44 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "forum_post")
 public class ForumPost {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String message;
     private LocalDateTime timestamp;
     private int likeCount;
+    
+    // Νέο πεδίο για το department:
+    private String department;
+
+    private String university;
+
+    // Constructors, getters and setters...
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+    // Constructors, getters and setters
 
     public ForumPost() {
     }
 
-    public ForumPost(Long id, String username, String message, LocalDateTime timestamp, int likeCount) {
-        this.id = id;
-        this.username = username;
-        this.message = message;
-        this.timestamp = timestamp;
-        this.likeCount = likeCount;
-    }
-
-    // Getters and setters
-
+    // Getters and Setters for all fields
     public Long getId() {
         return id;
     }
@@ -51,5 +68,11 @@ public class ForumPost {
     }
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
+    }
+    public String getDepartment() {
+        return department;
+    }
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }
