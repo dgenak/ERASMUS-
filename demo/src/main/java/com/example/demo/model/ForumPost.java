@@ -1,31 +1,95 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "forum_post")
 public class ForumPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private String username;
-    private String message;
+    
+    // Πεδίο για να διακρίνουμε αν πρόκειται για "question" ή "experience"
+    private String type;
+    
+    // Χαρακτηριστικά για ερώτηση
+    private String title;
+    private String body;
+    
+    // Χαρακτηριστικά για εμπειρία
+    private String department;
+    private String university;
+    private String experience;
+    
     private LocalDateTime timestamp;
     private int likeCount;
     
-    // Νέο πεδίο για το department:
-    private String department;
+    // Λίστα για τις απαντήσεις του post (υποθέτουμε ότι η κλάση ForumReply έχει οριστεί ως entity ή ως embeddable)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ForumReply> replies = new ArrayList<>();
+    
+    // Επιπλέον πεδίο "message" (αν είναι απαραίτητο για τη λογική της εφαρμογής)
+    private String message;
 
-    private String university;
+    // Κατασκευαστής χωρίς παραμέτρους (απαιτείται από το JPA)
+    public ForumPost() {
+    }
 
-    // Constructors, getters and setters...
+    // Getters & Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
     public String getUniversity() {
         return university;
     }
@@ -33,46 +97,44 @@ public class ForumPost {
     public void setUniversity(String university) {
         this.university = university;
     }
-    // Constructors, getters and setters
 
-    public ForumPost() {
+    public String getExperience() {
+        return experience;
     }
 
-    // Getters and Setters for all fields
-    public Long getId() {
-        return id;
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
+
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
     public int getLikeCount() {
         return likeCount;
     }
+
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-    public String getDepartment() {
-        return department;
+
+    public List<ForumReply> getReplies() {
+        return replies;
     }
-    public void setDepartment(String department) {
-        this.department = department;
+
+    public void setReplies(List<ForumReply> replies) {
+        this.replies = replies;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

@@ -1,7 +1,5 @@
 package com.example.demo;
 
-// Αντί για javax.validation.*
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
 

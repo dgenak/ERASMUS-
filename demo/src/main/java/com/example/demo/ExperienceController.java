@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-// Αντί για javax.validation.*
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-
 
 @Controller
 public class ExperienceController {

@@ -530,19 +530,49 @@
         </thead>
         <tbody>
           <tr>
-            <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
           </tr>
           <tr>
-            <td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
           </tr>
           <tr>
-            <td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+            <td>21</td>
           </tr>
           <tr>
-            <td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td>
+            <td>22</td>
+            <td>23</td>
+            <td>24</td>
+            <td>25</td>
+            <td>26</td>
+            <td>27</td>
+            <td>28</td>
           </tr>
           <tr>
-            <td>29</td><td>30</td><td>31</td><td></td><td></td><td></td><td></td>
+            <td>29</td>
+            <td>30</td>
+            <td>31</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
@@ -782,47 +812,48 @@
     }
 
     async function loadForumPosts() {
-    try {
-      const response = await fetch('/api/forumPosts');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      try {
+        const response = await fetch('/api/forumPosts');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const posts = await response.json();
+        let html = '';
+        if (posts.length === 0) {
+          html = '<p>Δεν υπάρχουν ερωτήσεις ακόμα.</p>';
+        } else {
+          posts.forEach(post => {
+            html += `<div class="forum-post" id="post-${post.id}" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
+                <h3>${post.title}</h3>
+                <p>${post.body}</p>
+                <p><em>Από: ${post.username} - ${new Date(post.timestamp).toLocaleString()}</em></p>
+                <button onclick="toggleReplyForm(${post.id})">Απάντηση</button>
+                <div class="reply-form" id="reply-form-${post.id}" style="display:none; margin-top:10px;">
+                  <textarea id="reply-text-${post.id}" rows="3" placeholder="Γράψτε την απάντησή σας..."></textarea>
+                  <br>
+                  <button onclick="submitForumReply(${post.id})">Υποβολή Απάντησης</button>
+                </div>
+                <div class="replies" id="replies-${post.id}" style="margin-top:10px;">`;
+            if (post.replies && post.replies.length > 0) {
+              post.replies.forEach(reply => {
+                html += `<div style="border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px;">
+                    <p>${reply.body}</p>
+                    <p><em>Από: ${reply.username} - ${new Date(reply.timestamp).toLocaleString()}</em></p>
+                  </div>`;
+              });
+            } else {
+              html += `<p style="font-style: italic;">Δεν υπάρχουν απαντήσεις.</p>`;
+            }
+            html += `</div></div>`;
+          });
+        }
+        document.getElementById("forumContainer").innerHTML = html;
+      } catch (error) {
+        console.error("Σφάλμα φόρτωσης forum posts:", error);
+        document.getElementById("forumContainer").innerHTML = "<p>Σφάλμα φόρτωσης forum posts.</p>";
       }
-      const posts = await response.json();
-      let html = '';
-      if (posts.length === 0) {
-        html = '<p>Δεν υπάρχουν ερωτήσεις ακόμα.</p>';
-      } else {
-        posts.forEach(post => {
-          html += `<div class="forum-post" id="post-${post.id}" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px;">
-              <h3>${post.title}</h3>
-              <p>${post.body}</p>
-              <p><em>Από: ${post.username} - ${new Date(post.timestamp).toLocaleString()}</em></p>
-              <button onclick="toggleReplyForm(${post.id})">Απάντηση</button>
-              <div class="reply-form" id="reply-form-${post.id}" style="display:none; margin-top:10px;">
-                <textarea id="reply-text-${post.id}" rows="3" placeholder="Γράψτε την απάντησή σας..."></textarea>
-                <br>
-                <button onclick="submitForumReply(${post.id})">Υποβολή Απάντησης</button>
-              </div>
-              <div class="replies" id="replies-${post.id}" style="margin-top:10px;">`;
-          if (post.replies && post.replies.length > 0) {
-            post.replies.forEach(reply => {
-              html += `<div style="border-top: 1px dashed #ccc; padding-top: 10px; margin-top: 10px;">
-                  <p>${reply.body}</p>
-                  <p><em>Από: ${reply.username} - ${new Date(reply.timestamp).toLocaleString()}</em></p>
-                </div>`;
-            });
-          } else {
-            html += `<p style="font-style: italic;">Δεν υπάρχουν απαντήσεις.</p>`;
-          }
-          html += `</div></div>`;
-        });
-      }
-      document.getElementById("forumContainer").innerHTML = html;
-    } catch (error) {
-      console.error("Σφάλμα φόρτωσης forum posts:", error);
-      document.getElementById("forumContainer").innerHTML = "<p>Σφάλμα φόρτωσης forum posts.</p>";
     }
-  }
+
     function toggleReplyForm(postId) {
       const form = document.getElementById("reply-form-" + postId);
       if (form.style.display === "none" || form.style.display === "") {
